@@ -25,14 +25,10 @@ import javax.swing.KeyStroke;
 @SuppressWarnings("serial")
 public class SudokuFrameJtextfield extends JFrame implements ActionListener {
 	JPanel mainpane = (JPanel) this.getContentPane();
-//	int rowChoosen = 0;
-//	int columnChoosen = 0;
-////	JButton[] numberBtns = new JButton[9];
 	List<JButton> numberBtns = new ArrayList<JButton>();
 	List<JTextField> cellFiedls = new ArrayList<JTextField>();
 	boolean isIndice;
 	int cellChoosen = -1;
-//	JTable gridTable;
 
 	public SudokuFrameJtextfield() {
 		super("Jeu du sudoku");
@@ -51,7 +47,6 @@ public class SudokuFrameJtextfield extends JFrame implements ActionListener {
 		gamePane.add(createNumberPane(), BorderLayout.NORTH);
 		gamePane.add(createActionPane(), BorderLayout.SOUTH);
 		gamePane.setPreferredSize(new Dimension(this.getWidth(), this.getHeight() / 5));
-//		gamePane.setVisible(true);
 		return gamePane;
 	}
 
