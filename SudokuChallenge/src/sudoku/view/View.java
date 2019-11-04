@@ -26,11 +26,11 @@ public class View {
 		SudokuMenu menu = new SudokuMenu();
 		frame.setJMenuBar(menu.createMenu());
 
-		JPanel topPanel = new JPanel();
-		topPanel.setBorder(new LineBorder(Color.BLACK, 3));
-		topPanel.setBackground(Color.ORANGE);
-		topPanel.setLayout(new FlowLayout());
-		container.add(topPanel, BorderLayout.NORTH);
+//		JPanel topPanel = new JPanel();
+//		topPanel.setBorder(new LineBorder(Color.BLACK, 3));
+//		topPanel.setBackground(Color.ORANGE);
+//		topPanel.setLayout(new FlowLayout());
+//		container.add(topPanel, BorderLayout.NORTH);
 
 		JPanel centerPanel = new JPanel();
 		centerPanel.setBorder(new LineBorder(Color.BLACK, 3));
@@ -63,7 +63,7 @@ public class View {
 		}
 
 		SudokuButton button = new SudokuButton();
-		button.createButtons(sudokuGrid, 9);
+		button.createNumberButtons(sudokuGrid, 9);
 		List<JButton> numButtons = button.getNumButtons();
 		for (int i = 0; i < 9; i++) {
 			bottomPanel.add(numButtons.get(i));

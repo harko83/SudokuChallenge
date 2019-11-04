@@ -11,7 +11,7 @@ import javax.swing.JButton;
 public class SudokuButton {
 	private List<JButton> numButtons = new ArrayList<JButton>();
 
-	public void createButtons(SudokuGrid sudokuGrid, int dimension) {
+	public void createNumberButtons(SudokuGrid sudokuGrid, int dimension) {
 
 		Dimension numButtonDimension = new Dimension(60, 30);
 
@@ -23,15 +23,20 @@ public class SudokuButton {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					int numBtn = numButtons.indexOf((JButton) e.getSource());
-					;
 					sudokuGrid.getCellChosen().setText(String.valueOf(numBtn + 1));
-//					sudokuGrid.getCellChosen().setBackground(Color.WHITE);
-//					sudokuGrid.setCellChosen(null);
-//					System.out.println(numBtn + 1);
+					int input = Integer.parseInt(sudokuGrid.getCellChosen().getText());
+
+//					Verificator verificator = new Verificator(sudokuGrid.getArr());
+//					verificator.check(horisontalLine, verticalLine, input);
+
 				}
 			});
 			numButtons.add(button);
 		}
+	}
+
+	public void createActionButtons() {
+
 	}
 
 	public List<JButton> getNumButtons() {

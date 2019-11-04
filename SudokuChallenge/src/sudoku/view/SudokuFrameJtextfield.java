@@ -133,7 +133,7 @@ public class SudokuFrameJtextfield extends JFrame implements ActionListener {
 				cellChoosen = cellFiedls.indexOf(e.getSource());
 				if (!cellFiedls.get(cellChoosen).getText().equalsIgnoreCase("0")) {
 					isIndice = true;
-					JOptionPane.showInputDialog("Vous aves cliqué sur un indice. Cette case n'est pas modifiable");
+					JOptionPane.showInputDialog("Vous aves cliquï¿½ sur un indice. Cette case n'est pas modifiable");
 				} else {
 					isIndice = false;
 				}
@@ -176,7 +176,7 @@ public class SudokuFrameJtextfield extends JFrame implements ActionListener {
 ////				else
 ////					System.out.println("Vous ne pouvez pas modifier cette case");
 ////				System.out.println(
-////						" Vous avez cliqué sur la cellule : ligne n° " + rowChoosen + " colonne n°" + columnChoosen);
+////						" Vous avez cliquï¿½ sur la cellule : ligne nï¿½ " + rowChoosen + " colonne nï¿½" + columnChoosen);
 //			}
 //		});
 //
@@ -339,4 +339,5 @@ public class SudokuFrameJtextfield extends JFrame implements ActionListener {
 		} else
 			JOptionPane.showMessageDialog(null, "Choisissez d'abord une case");
 	}
+
 }
