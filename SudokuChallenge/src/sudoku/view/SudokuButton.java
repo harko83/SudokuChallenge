@@ -1,28 +1,40 @@
 package sudoku.view;
 
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
-import javax.swing.JPanel;
 
 public class SudokuButton {
-	public SudokuButton(JPanel jPanel) {
-		
+	private List<JButton> numButtons = new ArrayList<JButton>();
+
+	public void createButtons(SudokuGrid sudokuGrid, int dimension) {
+
 		Dimension numButtonDimension = new Dimension(60, 30);
-		
-		for (int i = 1; i <= 9; i++) {
-			JButton button = new JButton("" + i);
+
+		for (int i = 0; i < dimension; i++) {
+			JButton button = new JButton(String.valueOf(i + 1));
 			button.setPreferredSize(numButtonDimension);
-			jPanel.add(button);
+			button.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					int numBtn = numButtons.indexOf((JButton) e.getSource());
+					;
+					sudokuGrid.getCellChosen().setText(String.valueOf(numBtn + 1));
+//					sudokuGrid.getCellChosen().setBackground(Color.WHITE);
+//					sudokuGrid.setCellChosen(null);
+//					System.out.println(numBtn + 1);
+				}
+			});
+			numButtons.add(button);
 		}
-//		JButton b1 = new JButton("1");
-//		JButton b2 = new JButton("2");
-//		JButton b3 = new JButton("3");
-//		JButton b4 = new JButton("4");
-//		JButton b5 = new JButton("5");
-//		JButton b6 = new JButton("6");
-//		JButton b7 = new JButton("7");
-//		JButton b8 = new JButton("8");
-//		JButton b9 = new JButton("9");
+	}
+
+	public List<JButton> getNumButtons() {
+		return numButtons;
 	}
 }
