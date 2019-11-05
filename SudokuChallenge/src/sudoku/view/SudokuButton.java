@@ -24,7 +24,7 @@ public class SudokuButton {
 				public void actionPerformed(ActionEvent e) {
 					int numBtn = numButtons.indexOf((JButton) e.getSource());
 					sudokuGrid.getCellChosen().setText(String.valueOf(numBtn + 1));
-					int input = Integer.parseInt(sudokuGrid.getCellChosen().getText());
+//					int input = Integer.parseInt(sudokuGrid.getCellChosen().getText());
 
 //					Verificator verificator = new Verificator(sudokuGrid.getArr());
 //					verificator.check(horisontalLine, verticalLine, input);

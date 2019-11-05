@@ -340,4 +340,7 @@ public class SudokuFrameJtextfield extends JFrame implements ActionListener {
 			JOptionPane.showMessageDialog(null, "Choisissez d'abord une case");
 	}
 
+//	public static void main(String[] args) {
+//		new SudokuFrameJtextfield();
+//	}
 }
