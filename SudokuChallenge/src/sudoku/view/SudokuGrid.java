@@ -9,6 +9,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
@@ -23,6 +24,7 @@ public class SudokuGrid extends JPanel {
 	private int dimension;
 	private int miniGridDimension;
 	private JTextField cellChosen = new JTextField();
+	private boolean indice;
 
 	public SudokuGrid(int dimension) {
 		this.dimension = dimension;
@@ -69,10 +71,20 @@ public class SudokuGrid extends JPanel {
 					@Override
 					public void mouseClicked(MouseEvent e) {
 						setCellChosen(field);
+//						cellChoosen = cellFiedls.indexOf(e.getSource());
+
 						for (int k = 0; k < dimension; k++) {
 							for (int l = 0; l < dimension; l++) {
 								if (e.getSource() == grid[k][l]) {
+
 									point.setLocation(k, l);
+									if (!grid[(int) point.getX()][(int) point.getY()].getText().equalsIgnoreCase("0")) {
+										indice = true;
+										JOptionPane.showMessageDialog(null,
+												"Vous aves cliqu� sur un indice. Cette case n'est pas modifiable");
+									} else {
+										indice = false;
+									}
 									System.out.println(k + "   " + l);
 
 								}
@@ -104,11 +116,18 @@ public class SudokuGrid extends JPanel {
 	}
 
 	public void setCellChosen(JTextField field) {
+
 		if (cellChosen != null) {
 			cellChosen.setBackground(Color.WHITE);
 		}
-		field.setBackground(Color.MAGENTA);
-		this.cellChosen = field;
+		if (indice != true) {
+			field.setBackground(Color.MAGENTA);
+			this.cellChosen = field;
+		}
+	}
+
+	public boolean isIndice() {
+		return indice;
 	}
 
 }

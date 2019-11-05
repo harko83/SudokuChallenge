@@ -35,7 +35,7 @@ public class View {
 //		centerPanel.setBackground(Color.ORANGE);
 //		centerPanel.setLayout(new FlowLayout());
 //		container.add(centerPanel, BorderLayout.CENTER);
-		SudokuGrid sudokuGrid = new SudokuGrid(4);
+		SudokuGrid sudokuGrid = new SudokuGrid(9);
 		sudokuGrid.setGrid(gridRowColumn);
 		container.add(sudokuGrid);
 
@@ -45,7 +45,7 @@ public class View {
 		bottomPanel.setLayout(new GridLayout(2, 1));
 		bottomPanel.add(frame.createActionPane());
 
-		SudokuButton button = new SudokuButton();
+		SudokuNumberButton button = new SudokuNumberButton();
 		button.createNumberButtons(sudokuGrid, 9);
 		List<JButton> numButtons = button.getNumButtons();
 		JPanel numberPanel = new JPanel();

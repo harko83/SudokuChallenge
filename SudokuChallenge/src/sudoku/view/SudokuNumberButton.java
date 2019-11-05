@@ -7,8 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
-public class SudokuButton {
+public class SudokuNumberButton {
 	private List<JButton> numButtons = new ArrayList<JButton>();
 
 	public void createNumberButtons(SudokuGrid sudokuGrid, int dimension) {
@@ -23,7 +24,10 @@ public class SudokuButton {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					int numBtn = numButtons.indexOf((JButton) e.getSource());
-					sudokuGrid.getCellChosen().setText(String.valueOf(numBtn + 1));
+					if (!sudokuGrid.isIndice()) {
+						sudokuGrid.getCellChosen().setText(String.valueOf(numBtn + 1));
+					} else
+						JOptionPane.showMessageDialog(null, "Choisissez d'abord une case");
 //					int input = Integer.parseInt(sudokuGrid.getCellChosen().getText());
 
 //					Verificator verificator = new Verificator(sudokuGrid.getArr());
