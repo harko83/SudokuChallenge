@@ -496,7 +496,7 @@ public class Controller {
 		return matriceJoueurReco;
 	}
 	
-	private int[][] matriceTestBool(int matrice[][], int matriceSoluce[][]) {
+	public int[][] matriceTestBool(int matrice[][], int matriceSoluce[][]) {
 		
 		for (int i = 0; i < this.dimMatriceX; i++) {
 			
