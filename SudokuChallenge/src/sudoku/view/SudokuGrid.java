@@ -17,7 +17,21 @@ import javax.swing.border.LineBorder;
 @SuppressWarnings("serial")
 public class SudokuGrid extends JPanel {
 	private JTextField[][] grid;
-//	private JPanel[][] minigrids;
+
+	public int[][] getGrid() {
+		int[][] intGrid = new int[dimension][dimension];
+		for (int x = 0; x < dimension; x++) {
+			for (int y = 0; y < dimension; y++) {
+//				grid[x][y] = new JTextField();
+				intGrid[x][y] = Integer.parseInt(grid[x][y].getText());
+
+			}
+
+		}
+		return intGrid;
+	}
+
+	// private JPanel[][] minigrids;
 	private Point point = new Point();
 //	private int[][] arr;
 	private int dimension;

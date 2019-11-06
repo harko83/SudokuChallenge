@@ -11,9 +11,11 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
+import sudoku.controller.Controller;
+
 public class View {
 
-	public View(int[][] gridRowColumn) {
+	public View(Controller controller) {
 		SudokuFrame frame = new SudokuFrame("Jeu du sudoku", 900, 900);
 
 		Container container = frame.getContentPane();
@@ -36,14 +38,14 @@ public class View {
 //		centerPanel.setLayout(new FlowLayout());
 //		container.add(centerPanel, BorderLayout.CENTER);
 		SudokuGrid sudokuGrid = new SudokuGrid(9);
-		sudokuGrid.setGrid(gridRowColumn);
+		sudokuGrid.setGrid(controller.getMatrice());
 		container.add(sudokuGrid);
 
 		JPanel bottomPanel = new JPanel();
 		bottomPanel.setBorder(new LineBorder(Color.BLACK, 3));
 		bottomPanel.setBackground(Color.ORANGE);
 		bottomPanel.setLayout(new GridLayout(2, 1));
-		bottomPanel.add(frame.createActionPane());
+		bottomPanel.add(frame.createActionPane(sudokuGrid, controller));
 
 		SudokuNumberButton button = new SudokuNumberButton();
 		button.createNumberButtons(sudokuGrid, 9);
