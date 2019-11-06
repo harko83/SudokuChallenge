@@ -8,6 +8,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import sudoku.controller.Controller;
+
 @SuppressWarnings("serial")
 public class SudokuFrame extends JFrame {
 
@@ -20,7 +22,7 @@ public class SudokuFrame extends JFrame {
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
 
-	public JPanel createActionPane() {
+	public JPanel createActionPane(SudokuGrid sudokuGrid, Controller controller) {
 		JPanel actionPane = new JPanel();
 		actionPane.setLayout(new GridLayout(1, 5));
 		JButton restBtn = new JButton("Restart");
@@ -28,7 +30,6 @@ public class SudokuFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -37,8 +38,8 @@ public class SudokuFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-
+				controller.setMatrice(sudokuGrid.getGrid());
+//				controller.setTestBool(controller.getMatrice(), controller.getTestBool());
 			}
 		});
 		JButton checkRulesBtn = new JButton("Check rules");
