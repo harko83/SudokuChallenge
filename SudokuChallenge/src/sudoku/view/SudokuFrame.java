@@ -39,7 +39,7 @@ public class SudokuFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				controller.setMatrice(sudokuGrid.getGrid());
-				controller.setTestBool(controller.getMatrice(), controller.getTestBool());
+//				controller.setTestBool(controller.getMatrice(), controller.getTestBool());
 			}
 		});
 		JButton checkRulesBtn = new JButton("Check rules");
