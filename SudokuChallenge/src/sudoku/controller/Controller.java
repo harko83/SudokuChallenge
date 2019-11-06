@@ -3,11 +3,13 @@ package sudoku.controller;
 import java.util.Arrays;
 
 public class Controller {
-	private int matriceSoluce[][];
-	private int matrice[][]; // joueur
-
+	private int matriceSoluce[][]; //matrice résolu
+	private int matrice[][]; // matrice joueur
+	
+	
 	private int matriceBlock[][];
-	private int matriceVerite[][];
+	private int matriceVerite[][]; //matrice vrai-faux
+	private int matriceJoueurReco[][]; // matrice recommencer la partie
 
 	/// // /> Début déclaration variables d'instances </
 
@@ -38,21 +40,19 @@ public class Controller {
 	/**
 	 * Constructeur par défaut initialisation des valeurs par défaut *
 	 */
-	public Controller() {
+	Controller() {
 		/*
 		 * Dimentions par defaut
 		 */
 		this.nbColon = 3;
 		this.nbLign = 3;
 
+		masterGenerationGrille();
 		/*
 		 * Niveau de difficulté basique
 		 */
-		this.nivDifficulte = 1;
-		masterGenerationGrille();
-
+		selectDiffculty(1);
 	}
-
 	/**
 	 * Contructeur surchargé Objetif : Rendre le modèle dynamique
 	 * 
@@ -101,7 +101,8 @@ public class Controller {
 
 		masterGenerationGrille();
 	}
-
+	
+	// Constructeur surchargé à utiliser par la vue
 	public Controller(int nbColon, int nbLign, int nivDifficulte) {
 
 		this.nbColon = nbColon;
@@ -112,7 +113,7 @@ public class Controller {
 		selectDiffculty(nivDifficulte);
 		matriceTestBool(matrice, matriceSoluce);
 	}
-
+	
 	/// // /> Fin déclaration constructeurs </
 
 	/**
@@ -132,8 +133,8 @@ public class Controller {
 		this.nbBlocktotal = this.nbBlockX * this.nbBlockY; // Calcul du nombre de blocks dans la matrice
 
 		this.nbChiffreBlock = this.nbColon * this.nbLign; // Calcul du nombre de chiffres par block
-
-		this.matriceVerite = new int[dimMatriceX][dimMatriceY];
+		
+		this.matriceVerite = new int [dimMatriceX][dimMatriceY];
 
 	}
 
@@ -223,13 +224,12 @@ public class Controller {
 				l++;
 
 				int compteur = 0;
-
+				
 				int[] tabXY = RandomXY();
 				int xCoorHorizontal = matriceBlock[l - 1][0] + tabXY[0];
 				int yCoorVertical = matriceBlock[l - 1][1] + tabXY[1];
 
-				while (!verifValidGeneration(matrice, matriceBlock, numBlock, chriffre, xCoorHorizontal,
-						yCoorVertical)) {
+				while (!verifValidGeneration(matrice, matriceBlock, numBlock, chriffre, xCoorHorizontal, yCoorVertical)) {
 					compteur++;
 					tabXY = RandomXY();
 					xCoorHorizontal = matriceBlock[l - 1][0] + tabXY[0];
@@ -419,14 +419,14 @@ public class Controller {
 		return isValide;
 
 	}
-
+	
 	private void randomLocationErase(int matrice[][], int ratioDiff) {
 		int cpt = 0;
 		while (cpt != ratioDiff) {
-			int temp[] = { Random(this.dimMatriceX), Random(this.dimMatriceY) };
+			int temp [] = {Random(this.dimMatriceX),Random(this.dimMatriceY)};
 
-			if (matrice[temp[0]][temp[1]] != 0) {
-				matrice[temp[0]][temp[1]] = 0;
+			if ( matrice[temp [0]][temp [1]] != 0) {
+				matrice[temp [0]][temp [1]] = 0;
 				cpt++;
 			}
 		}
@@ -434,44 +434,44 @@ public class Controller {
 	}
 
 	private int[][] selectDiffculty(int nivDifficulte) {
-
+		
 		this.nivDifficulte = nivDifficulte;
 		int indice;
-
+		
 		switch (nivDifficulte) {
-		// jouer sur nbChiffreBlock pour gérer la diffculté petit = facile
+		//jouer sur nbChiffreBlock pour gérer la diffculté petit = facile
 		case 1:
-			indice = 6;
-			break;
+			indice = 6;		
+			break;			
 		case 2:
-			indice = 5;
-			break;
+			indice = 5;		
+			break;			
 		case 3:
-			indice = 4;
+			indice = 4;		
 			break;
 		case 4:
 			indice = 3;
-			break;
+			break;			
 		case 5:
 			indice = 2;
 			break;
 		default:
 			indice = 2;
 		}
+		
+		nbCaseVisible= (((dimMatriceX+dimMatriceY)/2)*indice);
 
-		nbCaseVisible = (((dimMatriceX + dimMatriceY) / 2) * indice);
-
-		randomLocationErase(matrice, nbCasesMatrice - (nbCaseVisible));
+		randomLocationErase(matrice,nbCasesMatrice-(nbCaseVisible));
 		System.out.println(">>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<");
 		for (int[] row : matrice)
-			System.out.println(Arrays.toString(row));
+			System.out.println(Arrays.toString(row));	
 		System.out.println(">>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<");
-
+		
 //		for (int[] row : matriceSoluce)
 //			System.out.println(Arrays.toString(row));	
-
+		createMatriceReco(matrice);
 		return matrice;
-
+		
 	}
 
 	private int[][] clonateMatrice(int matrice[][]) {
@@ -482,24 +482,38 @@ public class Controller {
 		}
 		return matriceSoluce;
 	}
-
+	
+	private int[][] createMatriceReco(int matrice[][]) {
+		this.matriceJoueurReco = new int[matrice.length][];
+		for (int i = 0; i < matrice.length; i++) {
+			this.matriceJoueurReco[i] = new int[matrice[i].length];
+			System.arraycopy(matrice[i], 0, matriceJoueurReco[i], 0, matrice[i].length);
+			
+		}
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+		for (int[] row : matriceJoueurReco)
+			System.out.println(Arrays.toString(row));
+		return matriceJoueurReco;
+	}
+	
 	private int[][] matriceTestBool(int matrice[][], int matriceSoluce[][]) {
-
+		
 		for (int i = 0; i < this.dimMatriceX; i++) {
-
+			
 			for (int j = 0; j < dimMatriceY; j++) {
-
-				matriceVerite[i][j] = (matriceSoluce[i][j] == matrice[i][j] ? 1 : 0);
+				
+					matriceVerite[i][j] = (matriceSoluce[i][j]==matrice[i][j] ? 1 : 0);	
 			}
 		}
-
+		
 		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 		for (int[] row : matriceVerite)
 			System.out.println(Arrays.toString(row));
-
+		
 		return matriceVerite;
 	}
-
+	
+	
 	private void masterGenerationGrille() {
 		initiVariablesInstance();
 
@@ -519,12 +533,57 @@ public class Controller {
 		}
 
 	}
+	
+	public int[][] getMatriceSoluce() {
+		return matriceSoluce;
+	}
+
+
+	public void setMatriceSoluce(int[][] matriceSoluce) {
+		this.matriceSoluce = matriceSoluce;
+	}
+
 
 	public int[][] getMatrice() {
 		return matrice;
 	}
 
+
 	public void setMatrice(int[][] matrice) {
 		this.matrice = matrice;
 	}
+
+
+	public int[][] getMatriceVerite() {
+		return matriceVerite;
+	}
+
+
+	public void setMatriceVerite(int[][] matriceVerite) {
+		this.matriceVerite = matriceVerite;
+	}
+
+
+	public int[][] getMatriceJoueurReco() {
+		return matriceJoueurReco;
+	}
+
+
+	public void setMatriceJoueurReco(int[][] matriceJoueurReco) {
+		this.matriceJoueurReco = matriceJoueurReco;
+	}
 }
+
+/// exemple de déclaration de méthode pour javadoc
+/**
+ * description de la méthode. explication supplémentaire si nécessaire
+ * 
+ * @return description de la valeur de retour
+ * @param arg1 description du 1er argument : : :
+ * @param argN description du Neme argument
+ * @exception Exception1 description de la première exception : : :
+ * @exception ExceptionN description de la Neme exception
+ * 
+ * @see UneAutreClasse#UneAutreMethode
+ * @author Jean-Christophe;
+ */
