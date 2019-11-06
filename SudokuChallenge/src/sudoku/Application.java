@@ -1,8 +1,6 @@
 package sudoku;
 
 import sudoku.controller.Controller;
-//import sudoku.controller.Verificator;
-import sudoku.view.View;
 
 public class Application {
 
@@ -18,7 +16,7 @@ public class Application {
 
 		Controller controller = new Controller(3, 3, 5);
 
-		new View(controller.getMatrice());
+//		new View(controller.getMatrice());
 	}
 
 }
