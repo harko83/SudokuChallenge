@@ -9,7 +9,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
@@ -78,10 +77,9 @@ public class SudokuGrid extends JPanel {
 								if (e.getSource() == grid[k][l]) {
 
 									point.setLocation(k, l);
-									if (!grid[(int) point.getX()][(int) point.getY()].getText().equalsIgnoreCase("0")) {
+									if (!grid[(int) point.getX()][(int) point.getY()].getText().equalsIgnoreCase(" ")) {
 										indice = true;
-										JOptionPane.showMessageDialog(null,
-												"Vous aves cliqu� sur un indice. Cette case n'est pas modifiable");
+										cellChosen.setBackground(Color.WHITE);
 									} else {
 										indice = false;
 									}
@@ -105,7 +103,12 @@ public class SudokuGrid extends JPanel {
 		for (int x = 0; x < dimension; x++) {
 			for (int y = 0; y < dimension; y++) {
 //				grid[x][y] = new JTextField();
-				this.grid[x][y].setText(String.valueOf(gridRowColumn[x][y]));
+				int input = gridRowColumn[x][y];
+				if (input == 0) {
+					this.grid[x][y].setText(" ");
+				} else {
+					this.grid[x][y].setText(String.valueOf(input));
+				}
 			}
 
 		}
