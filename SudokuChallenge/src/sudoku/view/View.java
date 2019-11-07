@@ -23,8 +23,6 @@ public class View {
 		container.setBackground(Color.LIGHT_GRAY);
 		frame.getRootPane().setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.DARK_GRAY));
 
-		SudokuMenu menu = new SudokuMenu();
-		frame.setJMenuBar(menu.createMenu());
 
 //		JPanel topPanel = new JPanel();
 //		topPanel.setBorder(new LineBorder(Color.BLACK, 3));
@@ -40,6 +38,9 @@ public class View {
 		SudokuGrid sudokuGrid = new SudokuGrid(9);
 		sudokuGrid.setGrid(controller.getMatrice());
 		container.add(sudokuGrid);
+
+		SudokuMenu menu = new SudokuMenu();
+		frame.setJMenuBar(menu.createMenu(sudokuGrid, controller));
 
 		JPanel bottomPanel = new JPanel();
 		bottomPanel.setBorder(new LineBorder(Color.BLACK, 3));

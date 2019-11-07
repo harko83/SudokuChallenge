@@ -8,26 +8,77 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
-public class SudokuMenu {
-	public JMenuBar createMenu() {
-		JMenuBar menuBar = new JMenuBar();
-		
-		JMenu  menu = new JMenu("Menu");
-		
-		JMenu newGame = new JMenu("New Game");
-		menu.add(newGame);
-		
-		newGame.add(new JMenuItem("Level 1"));
-		newGame.add(new JMenuItem("Level 2"));
-		newGame.add(new JMenuItem("Level 3"));
-		newGame.add(new JMenuItem("Level 4"));
-		newGame.add(new JMenuItem("Level 5"));
+import sudoku.controller.Controller;
 
-		menu.add(new JMenuItem("Restart"));
-		menu.add(new JMenuItem("Score"));
+public class SudokuMenu {
+
+	public JMenuBar createMenu(SudokuGrid sudokuGrid, Controller controller) {
+		JMenuBar menuBar = new JMenuBar();
+		JMenu menu = new JMenu("Menu");
+		JMenu newGame = new JMenu("New Game");
+
+		menu.add(newGame);
+
+		// Choix du niveaux
+		JMenuItem easy = newGame.add(new JMenuItem("Easy"));
+		easy.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				controller.generate(3, 3, 1);
+				sudokuGrid.setGrid(controller.getMatrice());
+			}
+		});
+		JMenuItem medium = newGame.add(new JMenuItem("Medium"));
+		medium.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				controller.generate(3, 3, 2);
+				sudokuGrid.setGrid(controller.getMatrice());
+			}
+		});
+		JMenuItem hard = newGame.add(new JMenuItem("Hard"));
+		hard.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				controller.generate(3, 3, 3);
+				sudokuGrid.setGrid(controller.getMatrice());
+			}
+		});
+		JMenuItem expert = newGame.add(new JMenuItem("Expert"));
+		expert.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				controller.generate(3, 3, 4);
+				sudokuGrid.setGrid(controller.getMatrice());
+			}
+		});
+		JMenuItem master = newGame.add(new JMenuItem("Master"));
+		master.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				controller.generate(3, 3, 5);
+				sudokuGrid.setGrid(controller.getMatrice());
+			}
+		});
+
+		JMenuItem restart = menu.add(new JMenuItem("Restart"));
+		restart.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				sudokuGrid.setGrid(controller.getMatrice());
+
+			}
+		});
+
 		menu.addSeparator();
-		
-		
+
+		// Quitter le jeux
 		JMenuItem exit = menu.add(new JMenuItem("Exit"));
 		exit.addActionListener(new ActionListener() {
 			@Override
@@ -36,12 +87,10 @@ public class SudokuMenu {
 			}
 		});
 		exit.setAccelerator(KeyStroke.getKeyStroke("ctrl X"));
-		
-		JMenu help = new JMenu("Help");
-		
+
 		menuBar.add(menu);
-		menuBar.add(help);
-		
+
 		return menuBar;
 	}
+
 }
