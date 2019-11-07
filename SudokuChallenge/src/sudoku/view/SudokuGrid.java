@@ -156,9 +156,10 @@ public class SudokuGrid extends JPanel {
 				if (input == 0) {
 					this.grid[x][y].setText(" ");
 					this.grid[x][y].setForeground(Color.GRAY);
-					;
+
 					indices[x][y] = false;
 				} else {
+					this.grid[x][y].setForeground(Color.BLACK);
 					this.grid[x][y].setText(String.valueOf(input));
 					indices[x][y] = true;
 				}
