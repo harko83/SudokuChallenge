@@ -27,7 +27,7 @@ public class Controller {
 
 	private int nbChiffreBlock; // Nombre de chiffres par block
 
-	private int nivDifficulte; // Niveau difficulté de la partie
+	//private int nivDifficulte; // Niveau difficulté de la partie
 
 	private int nbCaseVisible; // Nombre de cases présenté au début de la partie
 
@@ -36,79 +36,22 @@ public class Controller {
 	/// // /> Fin déclaration variables d'instances </
 
 	/// // /> Début déclaration constructeurs </
-
-	/**
-	 * Constructeur par défaut initialisation des valeurs par défaut *
-	 */
-	Controller() {
-		/*
-		 * Dimentions par defaut
-		 */
-		this.nbColon = 3;
-		this.nbLign = 3;
-
-		masterGenerationGrille();
-		/*
-		 * Niveau de difficulté basique
-		 */
-		selectDiffculty(1);
-	}
-	/**
-	 * Contructeur surchargé Objetif : Rendre le modèle dynamique
-	 * 
-	 * @param nivDifficulte
-	 * 
-	 *                      Dimension de la matrice basique
-	 */
-	Controller(int nivDifficulte) {
-
-		/*
-		 * Niveau de difficulté interactif
-		 */
-		this.nivDifficulte = nivDifficulte;
-
-		/*
-		 * Dimension sudoku basique
-		 */
-		this.nbColon = 3;
-		this.nbLign = 3;
-
-		/*
-		 * Niveau de difficulté basique
-		 */
-		this.nivDifficulte = nivDifficulte;
-
-		masterGenerationGrille();
-	}
-
-	/**
-	 * Contructeur surchargé Objetif : Rendre le modèle dynamique
-	 * 
-	 * @param nbColon
-	 * @param nbLign
-	 * 
-	 *                Niveau de jeu basique
-	 */
-	Controller(int nbColon, int nbLign) {
-
-		this.nbColon = nbColon;
-		this.nbLign = nbLign;
-
-		/*
-		 * Niveau de difficulté basique
-		 */
-		this.nivDifficulte = 1;
-
-		masterGenerationGrille();
-	}
 	
 	// Constructeur surchargé à utiliser par la vue
 	public Controller(int nbColon, int nbLign, int nivDifficulte) {
 
 		this.nbColon = nbColon;
 		this.nbLign = nbLign;
-		this.nivDifficulte = nivDifficulte;
+		//this.nivDifficulte = nivDifficulte;
+		initiVariablesInstance();
+		this.matrice = new int[dimMatriceX][dimMatriceY];
 
+		if (nivDifficulte != 0) {			
+			generate(nbColon, nbLign, nivDifficulte);			
+		}
+	}
+	
+	public void generate (int nbColon, int nbLign, int nivDifficulte) {
 		masterGenerationGrille();
 		selectDiffculty(nivDifficulte);
 		matriceTestBool(matrice, matriceSoluce);
@@ -145,8 +88,8 @@ public class Controller {
 	 * @return Tableau vide de la taille de la matrice
 	 */
 	private int[][] generationGrille() {
-
-		int matrice[][] = new int[this.dimMatriceX][this.dimMatriceY]; // Créer un tableau de la dimention de la matrice
+		// Créer un tableau de la dimention de la matrice
+		int matrice[][] = new int[this.dimMatriceX][this.dimMatriceY]; 
 
 		return matrice;
 	}
@@ -157,7 +100,7 @@ public class Controller {
 	 * 
 	 * @return Tableau initialisé à zéro de la taille de la matrice
 	 */
-	private int[][] genrerationGrilleZero() {
+	public int[][] genrerationGrilleZero() {
 
 		int matriceZero[][] = generationGrille(); // Créer un tableau de la dimention de la matrice
 
@@ -435,7 +378,7 @@ public class Controller {
 
 	private int[][] selectDiffculty(int nivDifficulte) {
 		
-		this.nivDifficulte = nivDifficulte;
+		//this.nivDifficulte = nivDifficulte;
 		int indice;
 		
 		switch (nivDifficulte) {
@@ -514,18 +457,14 @@ public class Controller {
 	}
 	
 	
-	private void masterGenerationGrille() {
-		initiVariablesInstance();
-
-		this.matrice = genrerationGrilleZero();
+	public void masterGenerationGrille() {
+		//initiVariablesInstance();
+//		this.matrice = genrerationGrilleZero();
 		/**
 		 * Pour tester : affiche la matrice de coordonnées de blocks
 		 */
 		this.matriceBlock = geneTabCorrespondanceBlockMatrice();
-		// Appel fonction remplir grille aléatoire
-		/**
-		 * 
-		 */
+
 		boolean estMatriceGenenree = genererMatriceAleatoire(this.matrice, this.matriceBlock);
 		while (!estMatriceGenenree) {
 			this.matrice = genrerationGrilleZero();
