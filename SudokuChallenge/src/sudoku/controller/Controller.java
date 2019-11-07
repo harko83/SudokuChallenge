@@ -1,17 +1,14 @@
 package sudoku.controller;
 
 import java.util.Arrays;
-//test
+
 public class Controller {
+	/// // /> Début déclaration variables d'instances </
 	private int matriceSoluce[][]; //matrice résolu
 	private int matrice[][]; // matrice joueur
-	
-	
 	private int matriceBlock[][];
 	private int matriceVerite[][]; //matrice vrai-faux
 	private int matriceJoueurReco[][]; // matrice recommencer la partie
-
-	/// // /> Début déclaration variables d'instances </
 
 	private int nbColon; // Nombre de collones /> Nombre de blocks orizontales
 	private int nbLign; // Nombre de lignes /> Nombre de blocks verticaux
@@ -27,23 +24,16 @@ public class Controller {
 
 	private int nbChiffreBlock; // Nombre de chiffres par block
 
-	//private int nivDifficulte; // Niveau difficulté de la partie
-
 	private int nbCaseVisible; // Nombre de cases présenté au début de la partie
 
-	//// /// // /> Refflechir pour déclaration matrice globale, et matrice à trouver
-
-	/// // /> Fin déclaration variables d'instances </
-
-	/// // /> Début déclaration constructeurs </
-	
 	// Constructeur surchargé à utiliser par la vue
 	public Controller(int nbColon, int nbLign, int nivDifficulte) {
 
 		this.nbColon = nbColon;
 		this.nbLign = nbLign;
-		//this.nivDifficulte = nivDifficulte;
+		
 		initiVariablesInstance();
+		
 		this.matrice = new int[dimMatriceX][dimMatriceY];
 
 		if (nivDifficulte != 0) {			
@@ -56,8 +46,6 @@ public class Controller {
 		selectDiffculty(nivDifficulte);
 		matriceTestBool(matrice, matriceSoluce);
 	}
-	
-	/// // /> Fin déclaration constructeurs </
 
 	/**
 	 * Méthode initiVariablesInstance()
@@ -78,7 +66,6 @@ public class Controller {
 		this.nbChiffreBlock = this.nbColon * this.nbLign; // Calcul du nombre de chiffres par block
 		
 		this.matriceVerite = new int [dimMatriceX][dimMatriceY];
-
 	}
 
 	/**
@@ -101,8 +88,9 @@ public class Controller {
 	 * @return Tableau initialisé à zéro de la taille de la matrice
 	 */
 	public int[][] genrerationGrilleZero() {
-
-		int matriceZero[][] = generationGrille(); // Créer un tableau de la dimention de la matrice
+		
+		// Créer un tableau de la dimention de la matrice
+		int matriceZero[][] = generationGrille(); 
 
 		for (int i = 0; i < this.dimMatriceX; i++) {
 
@@ -111,7 +99,7 @@ public class Controller {
 				matriceZero[i][j] = 0;
 			}
 		}
-		return matriceZero; // Retourne la matrice initialisée à zéro
+		return matriceZero;
 	}
 
 	/**
@@ -133,19 +121,23 @@ public class Controller {
 //			 */
 		int matriceBlock[][] = new int[this.nbBlocktotal][4];
 
-		int intervalColon = this.nbColon; // Pour test
-		int intervalLign = this.nbLign; // Pour test
+		int intervalColon = this.nbColon;
+		int intervalLign = this.nbLign;
 
-		int k = 0; // Compteur pour indice de tableau
+		// Compteur pour indice de tableau
+		int k = 0;
 
 		for (int j = 0; j < this.nbBlockY; j++) {
 
 			for (int i = 0; i < this.nbBlockX; i++) {
-
-				matriceBlock[k][0] = i * intervalColon; // X Debut
-				matriceBlock[k][1] = j * intervalLign; // Y Debut
-				matriceBlock[k][2] = i * intervalColon + intervalColon - 1; // X Fin
-				matriceBlock[k][3] = j * intervalLign + intervalLign - 1; // Y Fin
+				// X Debut
+				matriceBlock[k][0] = i * intervalColon;
+				// Y Debut
+				matriceBlock[k][1] = j * intervalLign;
+				// X Fin
+				matriceBlock[k][2] = i * intervalColon + intervalColon - 1;
+				// Y Fin
+				matriceBlock[k][3] = j * intervalLign + intervalLign - 1;
 
 				k++;
 			}
@@ -158,21 +150,24 @@ public class Controller {
 		int chriffre = 0;
 
 		for (int i = 0; i < this.nbChiffreBlock; i++) {
-			chriffre++; // Chiffre à remplir dans les cases Block -> ensuite à modifier par i + 1 pour
-						// le rajouter dans la matrice
+			// Chiffre à remplir dans les cases Block -> ensuite à modifier par i + 1 pour
+			// le rajouter dans la matrice
+			chriffre++;
 
-			int l = 0; // A vérifier -> numéro de block
+			// A vérifier -> numéro de block
+			int l = 0;
 
 			for (int numBlock = 0; numBlock < nbBlocktotal; numBlock++) {
 				l++;
 
 				int compteur = 0;
-				
+
 				int[] tabXY = RandomXY();
 				int xCoorHorizontal = matriceBlock[l - 1][0] + tabXY[0];
 				int yCoorVertical = matriceBlock[l - 1][1] + tabXY[1];
 
-				while (!verifValidGeneration(matrice, matriceBlock, numBlock, chriffre, xCoorHorizontal, yCoorVertical)) {
+				while (!verifValidGeneration(matrice, matriceBlock, numBlock, chriffre, xCoorHorizontal,
+						yCoorVertical)) {
 					compteur++;
 					tabXY = RandomXY();
 					xCoorHorizontal = matriceBlock[l - 1][0] + tabXY[0];
@@ -180,11 +175,8 @@ public class Controller {
 					if (compteur > 100)
 						return false;
 				}
-
 				matrice[xCoorHorizontal][yCoorVertical] = chriffre;
-
 			}
-
 		}
 		/**
 		 * Pour afficher la matrice remplie
@@ -260,7 +252,8 @@ public class Controller {
 
 		// Vérifier que la case n'est pas utilisée dans le Block
 		if (matrice[xCoorHorizontal][yCoorVertical] != 0)
-			isValide = false; /// // /> Vérifier la position du X et du y dans le tableau
+			/// // /> Vérifier la position du X et du y dans le tableau
+			isValide = false;
 
 		return isValide;
 	}
@@ -279,22 +272,15 @@ public class Controller {
 	 * @return Booleen à true si le test effectué autorise la saisie
 	 */
 	public boolean verifChiffreBlock(int matrice[][], int matriceBlock[][], int numBlock, int chiffre) {
+		
+		// Juste pour teste initialisation
+		boolean isPossible = true; 
 
-		boolean isPossible = true; /// Juste pour teste initialisation
-
-		/*
-		 * Extraction coordonnées de début et de fin du block visé sur la matrice
-		 */
+		//Extraction coordonnées de début et de fin du block visé sur la matrice
 		int debutAxeOrisontal = matriceBlock[numBlock][0];
 		int debutAxeVertical = matriceBlock[numBlock][1];
 		int finAxeOrisontal = matriceBlock[numBlock][2];
 		int finAxeVertical = matriceBlock[numBlock][3];
-
-//			System.out.println("xDébut " + debutAxeOrisontal);
-//			System.out.println("yDébut " + debutAxeVertical);
-//			System.out.println("xFin " + finAxeOrisontal);
-//			System.out.println("yfin " + finAxeVertical);
-
 		/*
 		 * Parcourrir la matrice selon les coordonnées de début et de fin du block visé,
 		 * afin de vérifier que le chiffre n'est pas déjà présent
@@ -303,15 +289,13 @@ public class Controller {
 
 			for (int j = debutAxeVertical; j < finAxeVertical + 1; j++) // +1 ?
 			{
-
 				if (chiffre == matrice[i][j])
 					isPossible = false;
 			}
 		}
-
 		return isPossible;
 	}
-
+	
 	/**
 	 * Fonction verifChiffreLigne(int matrice[][], int yCoorVertical, int chiffre)
 	 * 
@@ -355,12 +339,9 @@ public class Controller {
 
 		// Vérifie que le chiffre n'est pas déjà présent sur la colonne
 		for (int j = 0; j < dimMatriceY; j++)
-
 			if (chiffre == matrice[xCoorHorizontal][j])
 				isValide = false;
-
 		return isValide;
-
 	}
 	
 	private void randomLocationErase(int matrice[][], int ratioDiff) {
@@ -373,7 +354,6 @@ public class Controller {
 				cpt++;
 			}
 		}
-
 	}
 
 	private int[][] selectDiffculty(int nivDifficulte) {
@@ -409,12 +389,9 @@ public class Controller {
 		for (int[] row : matrice)
 			System.out.println(Arrays.toString(row));	
 		System.out.println(">>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<");
-		
-//		for (int[] row : matriceSoluce)
-//			System.out.println(Arrays.toString(row));	
+
 		createMatriceReco(matrice);
 		return matrice;
-		
 	}
 
 	private int[][] clonateMatrice(int matrice[][]) {
@@ -430,8 +407,7 @@ public class Controller {
 		this.matriceJoueurReco = new int[matrice.length][];
 		for (int i = 0; i < matrice.length; i++) {
 			this.matriceJoueurReco[i] = new int[matrice[i].length];
-			System.arraycopy(matrice[i], 0, matriceJoueurReco[i], 0, matrice[i].length);
-			
+			System.arraycopy(matrice[i], 0, matriceJoueurReco[i], 0, matrice[i].length);	
 		}
 		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 		for (int[] row : matriceJoueurReco)
@@ -442,9 +418,7 @@ public class Controller {
 	public int[][] matriceTestBool(int matrice[][], int matriceSoluce[][]) {
 		
 		for (int i = 0; i < this.dimMatriceX; i++) {
-			
 			for (int j = 0; j < dimMatriceY; j++) {
-				
 					matriceVerite[i][j] = (matriceSoluce[i][j]==matrice[i][j] ? 1 : 0);	
 			}
 		}
@@ -455,7 +429,6 @@ public class Controller {
 		
 		return matriceVerite;
 	}
-	
 	
 	public void masterGenerationGrille() {
 		//initiVariablesInstance();
@@ -470,9 +443,10 @@ public class Controller {
 			this.matrice = genrerationGrilleZero();
 			estMatriceGenenree = genererMatriceAleatoire(this.matrice, this.matriceBlock);
 		}
-
 	}
 	
+	
+	//set-get
 	public int[][] getMatriceSoluce() {
 		return matriceSoluce;
 	}
