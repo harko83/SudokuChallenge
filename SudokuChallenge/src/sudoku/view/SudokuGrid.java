@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -18,12 +17,35 @@ import javax.swing.border.LineBorder;
 public class SudokuGrid extends JPanel {
 	private JTextField[][] grid;
 
-	public int[][] getGrid() {
+	public void displayResult(int[][] testBool/* , int[][] matriceSoluce */) {
+		for (int i = 0; i < dimension; i++) {
+			for (int j = 0; j < dimension; j++) {
+				if (testBool[i][j] == 0) {
+					grid[i][j].setForeground(Color.RED);
+				}
+//				grid[i][j].setText(String.valueOf(matriceSoluce[i][j]));
+			}
+		}
+	}
+
+	public void displaySoluce(int[][] matriceSoluce) {
+		for (int i = 0; i < dimension; i++) {
+			for (int j = 0; j < dimension; j++) {
+				grid[i][j].setText(String.valueOf(matriceSoluce[i][j]));
+			}
+		}
+	}
+
+	public int[][] getIntGrid() {
 		int[][] intGrid = new int[dimension][dimension];
 		for (int x = 0; x < dimension; x++) {
 			for (int y = 0; y < dimension; y++) {
 //				grid[x][y] = new JTextField();
-				intGrid[x][y] = Integer.parseInt(grid[x][y].getText());
+				String cellFilled = grid[x][y].getText();
+				if (!cellFilled.equalsIgnoreCase(" ")) {
+					intGrid[x][y] = Integer.parseInt(cellFilled);
+				} else
+					intGrid[x][y] = 0;
 
 			}
 
@@ -31,12 +53,17 @@ public class SudokuGrid extends JPanel {
 		return intGrid;
 	}
 
+	public JTextField[][] getGrid() {
+		return grid;
+	}
+
 	// private JPanel[][] minigrids;
-	private Point point = new Point();
+//	private Point point = new Point();
 //	private int[][] arr;
 	private int dimension;
 	private int miniGridDimension;
 	private JTextField cellChosen = new JTextField();
+	private boolean[][] indices;
 	private boolean indice;
 
 	public SudokuGrid(int dimension) {
@@ -51,7 +78,7 @@ public class SudokuGrid extends JPanel {
 
 	}
 
-	private void addGrid(int dimension) {
+	public void addGrid(int dimension) {
 		JPanel[][] minigrids = new JPanel[miniGridDimension][miniGridDimension];
 		for (int i = 0; i < miniGridDimension; i++) {
 			for (int j = 0; j < miniGridDimension; j++) {
@@ -79,24 +106,29 @@ public class SudokuGrid extends JPanel {
 //				}
 				grid[x][y] = field;
 				minigrids[x / miniGridDimension][y / miniGridDimension].add(field);
-
 				field.addMouseListener(new MouseAdapter() {
+
 					@Override
 					public void mouseClicked(MouseEvent e) {
+						cellChosen.setBackground(Color.WHITE);
 						setCellChosen(field);
+//						cellChosen = field;
 //						cellChoosen = cellFiedls.indexOf(e.getSource());
 
 						for (int k = 0; k < dimension; k++) {
 							for (int l = 0; l < dimension; l++) {
 								if (e.getSource() == grid[k][l]) {
-
-									point.setLocation(k, l);
-									if (!grid[(int) point.getX()][(int) point.getY()].getText().equalsIgnoreCase(" ")) {
-										indice = true;
+									indice = indices[k][l];
+//									point.setLocation(k, l);
+//									if (!grid[(int) point.getX()][(int) point.getY()].getText().equalsIgnoreCase(" ")) {
+									if (indice) {
 										cellChosen.setBackground(Color.WHITE);
 									} else {
-										indice = false;
-									}
+
+										cellChosen.setBackground(Color.MAGENTA);
+									} /*
+										 * else { // indice = false; // }
+										 */
 									System.out.println(k + "   " + l);
 
 								}
@@ -104,7 +136,9 @@ public class SudokuGrid extends JPanel {
 						}
 
 					}
+
 				});
+
 			}
 		}
 	}
@@ -114,14 +148,19 @@ public class SudokuGrid extends JPanel {
 //	}
 
 	public void setGrid(int[][] gridRowColumn) {
+		indices = new boolean[dimension][dimension];
 		for (int x = 0; x < dimension; x++) {
 			for (int y = 0; y < dimension; y++) {
 //				grid[x][y] = new JTextField();
 				int input = gridRowColumn[x][y];
 				if (input == 0) {
 					this.grid[x][y].setText(" ");
+					this.grid[x][y].setForeground(Color.GRAY);
+					;
+					indices[x][y] = false;
 				} else {
 					this.grid[x][y].setText(String.valueOf(input));
+					indices[x][y] = true;
 				}
 			}
 
@@ -132,19 +171,19 @@ public class SudokuGrid extends JPanel {
 		return cellChosen;
 	}
 
+	public boolean isIndice() {
+		// TODO Auto-generated method stub
+		return indice;
+	}
+
 	public void setCellChosen(JTextField field) {
 
 		if (cellChosen != null) {
 			cellChosen.setBackground(Color.WHITE);
 		}
-		if (indice != true) {
-			field.setBackground(Color.MAGENTA);
-			this.cellChosen = field;
-		}
-	}
-
-	public boolean isIndice() {
-		return indice;
+//		if (indice != true) {
+		this.cellChosen = field;
+//		}
 	}
 
 }
