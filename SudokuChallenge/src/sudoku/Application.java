@@ -1,6 +1,7 @@
 package sudoku;
 
 import sudoku.controller.Controller;
+import sudoku.view.View;
 
 public class Application {
 
@@ -14,9 +15,9 @@ public class Application {
 		 * 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
 		 */
 
-		Controller controller = new Controller(3, 3, 5);
+//		Controller controller = new Controller(3, 3, 5);
 
-//		new View(controller.getMatrice());
+		new View(new Controller(3, 3, 5));
 	}
 
 }
