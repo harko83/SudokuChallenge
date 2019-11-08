@@ -21,7 +21,7 @@ public class View {
 		Container container = frame.getContentPane();
 		container.setLayout(new BorderLayout(2, 2));
 		container.setBackground(Color.LIGHT_GRAY);
-		frame.getRootPane().setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.DARK_GRAY));
+		frame.getRootPane().setBorder(new LineBorder(Color.BLACK, 3));
 
 
 //		JPanel topPanel = new JPanel();
