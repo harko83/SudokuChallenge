@@ -3,12 +3,13 @@ package sudoku.view;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -32,13 +33,12 @@ public class Flybox extends JFrame {
 		this.setResizable(true);
 		this.setLayout(new GridBagLayout());
 		
-		//gbc.anchor = GridBagConstraints.FIRST_LINE_START;
-		
+		gbc.anchor = GridBagConstraints.FIRST_LINE_START;
 		gbc.fill = GridBagConstraints.BOTH;
 		
 		////////////image ////////////////
 		imgNumber = new JLabel();
-		imgNumber.setIcon(new ImageIcon("src\\sudoku\\view\\1.png"));
+		imgNumber.setIcon(new ImageIcon("src\\sudoku\\view\\nmb\\1.png"));
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.gridwidth = 1;
@@ -48,7 +48,7 @@ public class Flybox extends JFrame {
 		this.add(imgNumber, gbc);
 		
 		/////////////Label//////////////
-		lbJeu = new JLabel("SUDOKU");
+		lbJeu = new JLabel("SUDOKU",(int) CENTER_ALIGNMENT);
 		gbc.gridx = 2;
 		gbc.gridy = 0;
 		gbc.gridwidth = 2;
@@ -57,10 +57,10 @@ public class Flybox extends JFrame {
 		gbc.weighty = 1.0;
 		this.add(lbJeu, gbc);
 		
-		lbNb = new JLabel("Version Oiseaux");
+		lbNb = new JLabel("Version Oiseaux", (int) CENTER_ALIGNMENT);
 		gbc.gridx = 2;
 		gbc.gridy = 1;
-		gbc.gridwidth = 2;
+		gbc.gridwidth =2;
 		gbc.gridheight = 1;
 		gbc.weightx = 1.0;
 		gbc.weighty = 1.0;
@@ -75,7 +75,7 @@ public class Flybox extends JFrame {
 		gbc.weighty = 1.0;
 		this.add(jSep, gbc);
 		
-		lbInstr = new JLabel("Veuillez entrer un chiffre : ");
+		lbInstr = new JLabel("Veuillez entrer un chiffre : ", (int) CENTER_ALIGNMENT);
 		gbc.gridx = 2;
 		gbc.gridy = 3;
 		gbc.gridwidth = 1;
@@ -105,6 +105,12 @@ public class Flybox extends JFrame {
 		this.add(btnOk, gbc);
 		
 		btnCancelButton = new JButton("Cancel");
+		btnCancelButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 		gbc.gridx = 3;
 		gbc.gridy = 4;
 		gbc.gridwidth = 1;
@@ -113,7 +119,7 @@ public class Flybox extends JFrame {
 		gbc.weighty = 1.0;
 		this.add(btnCancelButton, gbc);
 		
-		this.setUndecorated(false);
+		this.setUndecorated(true);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setVisible(true);
 	}
