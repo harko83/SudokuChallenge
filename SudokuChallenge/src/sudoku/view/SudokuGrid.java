@@ -126,6 +126,7 @@ public class SudokuGrid extends JPanel {
 									} else {
 
 										cellChosen.setBackground(Color.MAGENTA);
+										new Flybox();
 									} /*
 										 * else { // indice = false; // }
 										 */
